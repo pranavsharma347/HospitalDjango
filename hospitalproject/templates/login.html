@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+
+{%block base%}
+<div class='container my-5'>
+  <form method='POST'>
+  {{form.as_p}}{{message}}
+   {% csrf_token %}
+    <input type='submit' value='Login' class='btn btn-primary'>
+    
+    </form>
+    </div>
+  </center>
+{%endblock%}

@@ -1,0 +1,90 @@
+{%extends 'base.html'%}
+
+{%block base%}
+{% load crispy_forms_tags %}
+<br>
+  {%for message in messages%}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong>Message:</strong> {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endfor%}
+<center>
+<div class='container'>
+<form method='post'>
+  <div class="form-group">
+  
+    <label for="exampleFormControlSelect1">Select Doctor</label>
+    <select class="form-control" id="doctor" name='mydoctor'>
+     <option>Please Select Doctor</option>
+    {%for x in timeslot%}
+      <option value={{x.id}}>{{x.first_name}}</option>
+      {%endfor%}
+    </select>
+   
+  </div>
+<div class="form-group">
+    <label for="timeslot">Select TimeSlot</label>
+    <select class="form-control" id="timeslot" name='mytimeslot'>
+      <option></option>
+    </select>
+    {% comment %} <div class="form-group">
+    <label for="patient_name">Available Time Slot</label>
+    <input type="text" class="form-control" id="availabletimeslot" name='patientname' aria-describedby="emailHelp" placeholder="Enter Patient Name" disabled >
+  </div> {% endcomment %}
+  </div>
+  <form method='post'>
+  {%csrf_token%}
+  <div class="form-group">
+    <label for="patient_name">Patient Name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" name='patientname' aria-describedby="emailHelp" placeholder="Enter Patient Name" required >
+  </div>
+   <div class="form-group">
+    <label for="patient_name">Patient Phone</label>
+    <input type="text" class="form-control" maxlength="10" name='patientphone'id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Patient Name" required>
+  </div>
+   <div class="form-group">
+    <label for="patient_name">Patient Email</label>
+    <input type="text" class="form-control" name='patientemail' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Patient Name" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</center>
+ <script>
+$('#doctor').change(function(){
+  data=$('#doctor').val()
+  console.log("---- ",data)
+  if (data==='Please Select Doctor'){
+    $('#timeslot').prop('disabled','disabled')
+    $('#timeslot').empty()
+    console.log('it is working')
+  }else{
+  
+      $('#timeslot').prop('disabled',false)
+    
+    $.ajax({
+             type: "GET",
+             url:"{% url 'selecttimesslot'%}",
+             data:{"id":$(this).children(":selected").attr('value')},
+             dataType: "json",
+             success:function(data){
+               var to_append=''
+               var available_timeslot=''
+               var len=data.length;
+               for(i=0;i<len;i++){
+               var id=data[i].id;
+               var start_time=data[i].start_time;
+               var end_time=data[i].end_time;
+               to_append+="<option value='"+start_time+' '+end_time+"'>"+start_time+' '+end_time+'</option>';
+               }
+               $('#timeslot').html(to_append)
+               
+             }
+             })
+  }
+  })
+</script>
+{%endblock%}

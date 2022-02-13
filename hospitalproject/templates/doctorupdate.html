@@ -1,0 +1,17 @@
+{%extends 'adminpage.html'%}
+
+{%block adminpage%}
+{% load crispy_forms_tags %}
+<br>
+<center>
+<div class='container'>
+<form method='post'>
+{%csrf_token%}
+{{form|crispy}}
+<br>
+<input type='submit' value='Submit' class='btn btn-primary btn-sm'>
+</form>
+</div>
+</center>
+
+{%endblock%}

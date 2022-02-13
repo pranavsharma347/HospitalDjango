@@ -1,0 +1,26 @@
+{%extends 'adminpage.html'%}
+{%block adminpage%}
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Date</th>
+      <th scope="col">Start Time</th>
+      <th scope="col">End Time</th>
+      <th scope="col">Book</th>
+      <th scope="col">Available Slot</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for data in timeslot%}
+    <tr>
+      <td>{{data.doctor}}</td>
+      <td>{{data.date}}</td>
+      <td>{{data.start_time}}</td>
+      <td>{{data.end_time}}</td>
+      <td>{{data.booked}}</td>
+      <td>{{data.slots_available}}</td>
+    </tr>
+    {%endfor%}
+</table>
+        {%endblock%}

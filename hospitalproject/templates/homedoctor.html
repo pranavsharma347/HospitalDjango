@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+
+{%block base%}
+<br>
+<form method='get' action='/homedoctors'>
+Choose Department:<select class="custom-select" name='select'>
+  <option value=1>Dental</option>
+  <option value=2>Cardiology</option>
+  <option value=3>Urology</option>
+  <option value=4>Plastic Surgery</option>
+  <option value=5>Nerology</option>
+</select>
+<input type='submit' class='btn btn-primary btn-sm' value='search'>
+</form>
+<br>
+
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Qualification</th>
+      <th scope="col">Area of Expertise</th>
+      <th scope="col">Department</th>
+      <th scope="col">Fees</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for data in doctor%}
+    <tr>
+      <td>{{data.first_name}} &nbsp;{{data.last_name}}</td>
+      <td>{{data.qualification}}</td>
+      <td>{{data.area_of_expertise}}</td>
+      <td>{{data.department}}</td>
+      <td>{{data.fees}}</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

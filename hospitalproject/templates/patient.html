@@ -1,0 +1,37 @@
+{%extends 'adminpage.html'%}
+
+{%block adminpage%}
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Consultants</th>
+      <th scope="col">Start Time</th>
+      <th scope="col">End Time</th>
+      <th scope="col">Report</th>
+      <th scope="col">Activity</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {%for data in patients%}
+    <tr>
+      <td>{{data.patinet_name}}</td>
+      <td>{{data.patient_email}}</td>
+      <td>{{data.patient_phone}}</td>
+      <td>{{data.mydoctor}}</td>
+      <td>{{data.start_time}}</td>
+      <td>{{data.end_time}}</td>
+      <td><a href="{{data.file_upload.url}}" class="btn btn-primary">Report</a></td>
+
+      {% comment %} <td>{%for x in data.doctor_set.all%}
+      {{x.first_name}} {% endcomment %}
+      <td><a href='/updatepatient/{{data.id}}/' class='btn btn-primary'>Update</a>&nbsp;<a href='/deletepatient/{{data.id}}/' class='btn btn-danger'>Delete</a></td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}
